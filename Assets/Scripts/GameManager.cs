@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(CardSpawner),typeof(CardSwitch))]
+[RequireComponent(typeof(CardSpawner), typeof(CardSwitch))]
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameGrid grid;
+    [SerializeField] private SoundEffects soundEffects;
 
     private CardSpawner _cardSpawner;
     private CardSwitch _cardSwitch;
@@ -30,6 +31,19 @@ public class GameManager : MonoBehaviour
         {
             card.onClick += _cardSwitch.OnCardClick;
             card.onOpen += _cardSwitch.OnCardOpen;
+
+            if (soundEffects)
+            {
+                card.onClick += (c) =>
+                {
+                    soundEffects.ClickEffectPlay();
+                };
+            }
+        }
+
+        if (soundEffects)
+        {
+            _cardSwitch.onCardKill += soundEffects.KillEffectPlay;
         }
     }
 

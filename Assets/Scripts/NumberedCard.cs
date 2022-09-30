@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+
 public class NumberedCard : MonoBehaviour, ICard
 {
     public event Action<ICard> onClick;
@@ -20,6 +21,7 @@ public class NumberedCard : MonoBehaviour, ICard
     private readonly Vector3 _closeRotation = new Vector3(0, 0, 180);
 
     private bool _isOpen;
+    private bool _locled;
 
     #region Initialize
     public void Initialize(int number)
@@ -65,23 +67,24 @@ public class NumberedCard : MonoBehaviour, ICard
 
     private void Rotate(Vector3 targetRot)
     {
+        _locled = true;
         transform.DORotate(targetRot, rotateDuration, RotateMode.Fast)
             .OnComplete(AfterRotation);
     }
 
     private void AfterRotation()
     {
-        _isOpen = !_isOpen;
-
+        _isOpen = !_isOpen;        
         if (_isOpen)
         {
             onOpen?.Invoke(this);
         }
+        _locled = false;
     }
 
     private void OnMouseDown()
     {
-        if (!_isOpen)
+        if (!_isOpen && !_locled)
         {
             onClick?.Invoke(this);
         }
