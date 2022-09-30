@@ -275,8 +275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid:
-    width: 4
-    height: 4
+    width: 2
+    height: 2
     sameCount: 2
 --- !u!4 &790600586
 Transform:

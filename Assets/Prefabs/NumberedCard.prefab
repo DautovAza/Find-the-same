@@ -355,3 +355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 178331524893068126}
   sprite: {fileID: 3184924658062044023}
+  rotateDuration: 0.5
+  destroyDuration: 1
+  destroyTargetScale: {x: 0.7, y: 0.7, z: 0.7}

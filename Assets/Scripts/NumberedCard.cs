@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class NumberedCard : MonoBehaviour, ICard
 {
     public event Action<ICard> onClick;
@@ -11,6 +11,10 @@ public class NumberedCard : MonoBehaviour, ICard
 
     [SerializeField] private Text nameText;
     [SerializeField] private SpriteRenderer sprite;
+
+    [SerializeField] private float rotateDuration = 0.5f;
+    [SerializeField] private float destroyDuration = 1;
+    [SerializeField] private float destroyTargetScale = 0.5f;
 
     private readonly Vector3 _openRotation = new Vector3(0, 0, 0);
     private readonly Vector3 _closeRotation = new Vector3(0, 0, 180);
@@ -37,10 +41,6 @@ public class NumberedCard : MonoBehaviour, ICard
         {
             Rotate(_openRotation);
         }
-        else
-        {
-            Debug.Log(this.name + ": карта уже открыта!");
-        }
     }
 
     public void Close()
@@ -49,15 +49,13 @@ public class NumberedCard : MonoBehaviour, ICard
         {
             Rotate(_closeRotation);
         }
-        else
-        {
-            Debug.Log(this.name + ": карта уже закрыта!");
-        }
     }
 
     public void Kill()
     {
-        Destroy(gameObject);
+        transform
+            .DOScale(destroyTargetScale*transform.localScale, destroyDuration)
+            .OnComplete(() => { Destroy(gameObject); });
     }
     public bool IsSame(ICard other)
     {
@@ -67,8 +65,8 @@ public class NumberedCard : MonoBehaviour, ICard
 
     private void Rotate(Vector3 targetRot)
     {
-        transform.rotation = Quaternion.Euler(targetRot);
-        AfterRotation();
+        transform.DORotate(targetRot, rotateDuration, RotateMode.Fast)
+            .OnComplete(AfterRotation);
     }
 
     private void AfterRotation()
