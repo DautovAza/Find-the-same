@@ -15,7 +15,7 @@ public class SoundEffects : MonoBehaviour
         _source = GetComponent<AudioSource>();
     }
 
-    public void ClickEffectPlay() 
+    public void ClickEffectPlay()
     {
         _source.PlayOneShot(cardClick);
     }
@@ -25,12 +25,13 @@ public class SoundEffects : MonoBehaviour
         _source.PlayOneShot(cardKill);
     }
 
-    public void GameEndEffect(bool win)
+    public void WinEffectPlay()
     {
-        if(win)
-            _source.PlayOneShot(gameWin);
-        else
-            _source.PlayOneShot(gameLose);
+        _source.PlayOneShot(gameWin);
+    }
+    public void LoseEffect()
+    {
+        _source.PlayOneShot(gameLose);
     }
 
 

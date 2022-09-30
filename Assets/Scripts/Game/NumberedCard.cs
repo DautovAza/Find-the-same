@@ -84,7 +84,7 @@ public class NumberedCard : MonoBehaviour, ICard
 
     private void OnMouseDown()
     {
-        if (!_isOpen && !_locled)
+        if (!_isOpen && !_locled && !Game.gamePaused)
         {
             onClick?.Invoke(this);
         }
